@@ -68,7 +68,7 @@ All models are scored on the same held-out test split using **R²**, **RMSE**, a
 
 ## Results
 
-### CNN-BiLSTM Final (no leakage)
+### CNN-BiLSTM Final
 
 * True sequence-only classifier (no expression input)
 * Per-species confusion matrices and ROC curves consistent across Arabidopsis, Maize, Sorghum
@@ -97,7 +97,6 @@ All models are scored on the same held-out test split using **R²**, **RMSE**, a
 
 * Every regression model posts its highest R² on the **"with enhancer + light, tobacco"** condition
 * **CatBoost** wins quantitative regression; the **Final no-leakage CNN+BiLSTM+GENERator** wins functional classification
-* Sequence-composition features hit a ceiling around **R² ≈ 0.60** — the remainder requires motif spacing, chromatin context, or measurement-noise modelling
 * Data leakage in v1 produced near-perfect (~99.997% AUC) but **invalid** metrics; the Final redesign demonstrates that sequence-only prediction is genuinely possible
 
 ---

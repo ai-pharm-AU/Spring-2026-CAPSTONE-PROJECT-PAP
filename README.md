@@ -8,9 +8,17 @@
 
 ## Overview
 
-This project explores how machine-learning model architecture and feature representation impact the prediction of plant promoter activity from DNA sequence. Most prior work either uses simple classical models on hand-engineered features or large deep models without rigorously controlling for label leakage from expression data.
+Predicting how strongly a plant promoter drives gene expression — straight from its DNA sequence — is one of the core problems in plant synthetic biology and crop improvement. This capstone trains and compares **six machine-learning models** on the same large pan-plant STARR-seq dataset spanning *Arabidopsis thaliana*, *Zea mays*, and *Sorghum bicolor*, so the only thing that varies between experiments is the model architecture and the feature representation.
 
-We evaluate whether combining a CNN+BiLSTM hybrid with frozen GENERator-v2 foundation-model embeddings, alongside ElasticNet, XGBoost, and CatBoost baselines, improves prediction accuracy and generalisation across three plant species (*Arabidopsis thaliana*, *Zea mays*, *Sorghum bicolor*) and six STARR-seq experimental conditions.
+Starting from **79,842** raw promoter sequences (170 bp) paired with activity measurements across six experimental conditions (tobacco vs maize, ± enhancer, light vs dark), preprocessing and an inner-join on `gene` give a clean **67,860-promoter** working dataset that every model is trained and evaluated on.
+
+The six models fall into three families:
+
+* **Deep learning** — three iterations of a CNN + BiLSTM hybrid that fuses one-hot DNA with frozen embeddings from the GENERator-v2-eukaryote-1.2b genomic language model (v1 baseline → v2 improved → Final )
+* **Linear** — ElasticNet regression with L1+L2 regularisation, trained per condition with in-silico mutagenesis for interpretability
+* **Gradient boosting** — XGBoost baseline plus a CatBoost vs improved-XGBoost head-to-head with enriched 1,034-dim features
+
+All models are scored on the same held-out test split using **R²**, **RMSE**, and **Pearson r** for regression and **Accuracy** / **F1** / **AUROC** for the Final classifier.
 
 ---
 
@@ -82,7 +90,7 @@ We evaluate whether combining a CNN+BiLSTM hybrid with frozen GENERator-v2 found
 ### CatBoost (regression — overall winner)
 
 * **Avg test R²: 0.58 – 0.60**
-* Best condition R²: **~0.62** (with enhancer + light, tobacco)
+* Best condition R²: **~0.59** (with enhancer + light, tobacco)
 * Smallest train–test gap of the three tree-based variants
 
 ### Key Findings
@@ -96,5 +104,6 @@ We evaluate whether combining a CNN+BiLSTM hybrid with frozen GENERator-v2 found
 
 ## Contributors
 
-* **Yeshaswee Sai Ganesh Volety** — Auburn University
 * **Abhipsha Sahoo** — Auburn University
+* **Yeshaswee Sai Ganesh Volety** — Auburn University
+

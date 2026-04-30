@@ -67,7 +67,7 @@ XGBoost baseline (regression)
 * Best condition R²: 0.584 (with enhancer + light, tobacco)
 * Train–test gap: ~0.243 (moderate overfitting)
 
-CatBoost (regression — overall winner)
+CatBoost (regression — best)
 
 * Avg test R²: 0.58 – 0.60
 * Best condition R²: ~0.62 (with enhancer + light, tobacco)
